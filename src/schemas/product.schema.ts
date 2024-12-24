@@ -1,18 +1,10 @@
 import * as mongoose from 'mongoose';
+import { IProduct } from 'src/interfaces/product-interface.interface';
 
-export interface IProductSchema extends mongoose.Document {
-  product_name: string;
-  price: number;
-  quantity: number;
-  company: string;
-  date_of_manufacture: Date;
-  description: string;
-  category: 'Electronics' | 'Clothing' | 'Groceries' | 'Furniture' | 'Books';
-}
 
-export const ProductSchema = new mongoose.Schema<IProductSchema>(
+export const ProductSchema = new mongoose.Schema<IProduct>(
   {
-    product_name: {
+    productName: {
       type: String,
       required: [true, 'Product name cannot be empty'],
       trim: true,
@@ -33,7 +25,7 @@ export const ProductSchema = new mongoose.Schema<IProductSchema>(
       required: [true, 'Company name cannot be empty'],
       trim: true,
     },
-    date_of_manufacture: {
+    dateOfManufacture: {
       type: Date,
       required: [true, 'Date of manufacture cannot be empty'],
     },
@@ -53,19 +45,21 @@ export const ProductSchema = new mongoose.Schema<IProductSchema>(
     toObject: {
       versionKey: false,
       transform: (_doc, ret: { [key: string]: any }) => {
-        delete ret._id; // Remove _id from the response
+        ret.id = ret._id; // Map _id to id
+        delete ret._id;    // Remove _id
       },
     },
     toJSON: {
       versionKey: false,
       transform: (_doc, ret: { [key: string]: any }) => {
-        delete ret._id; // Remove _id from the response
+        ret.id = ret._id; // Map _id to id
+        delete ret._id;    // Remove _id
       },
     },
   },
 );
 
-export const ProductModel = mongoose.model<IProductSchema>(
+export const ProductModel = mongoose.model<IProduct>(
   'Product',
   ProductSchema,
 );

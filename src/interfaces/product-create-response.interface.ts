@@ -1,8 +1,9 @@
-import { IProduct } from './product.interface';
+import { IProduct } from "./product-interface.interface";
+import { IPurchaseProduct } from "./product-purchase.interface";
 
-export interface IProductCreateResponse {
+export interface IProductResponse {
   status: number;
   message: string;
-  prouct: IProduct | null;
+  product: IPurchaseProduct | IProduct | null;
   errors: { [key: string]: any } | null;
 }

@@ -10,12 +10,13 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: [process.env.RABBIT_MQ_URL],
-      queue: 'main_queue',
+      queue: 'product_queue',
       queueOptions: {
         durable: false,
       },
     },
   });
+
   await app.listen();
 }
 bootstrap();
